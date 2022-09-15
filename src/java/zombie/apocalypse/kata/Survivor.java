@@ -1,6 +1,6 @@
 package zombie.apocalypse.kata;
 
-public class Survivor {
+public class Survivor implements Character {
 
     private final String name;
     private int life;
@@ -28,5 +28,15 @@ public class Survivor {
 
     public boolean attack(){
         return false;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public CharacterType type() {
+        return CharacterType.SURVIVOR;
     }
 }
