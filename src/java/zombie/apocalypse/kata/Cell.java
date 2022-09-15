@@ -1,8 +1,11 @@
 package zombie.apocalypse.kata;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.*;
 
 public class Cell {
 
@@ -38,10 +41,32 @@ public class Cell {
     public void remove(String characterName) {
         this.zombies = zombies.stream()
                 .filter(it -> !it.getName().equals(characterName))
-                .collect(Collectors.toList());
+                .collect(toList());
 
         this.survivors = survivors.stream()
                 .filter(it -> !it.getName().equals(characterName))
-                .collect(Collectors.toList());
+                .collect(toList());
+    }
+
+    public void collectItem(String characterName, String itemType, Hand hand) {
+        survivors.stream()
+                .filter(it -> it.getName().equals(characterName))
+                .findFirst().ifPresent(it -> take((Survivor) it, itemType, hand));
+        items = items.stream()
+                .filter(it -> !it.getType().equals(itemType))
+                .collect(toList());
+    }
+
+    private void take(Survivor character, String itemType, Hand hand) {
+            findItem(itemType).ifPresent(it -> takeWithHand(character, hand, it));
+    }
+
+    private void takeWithHand(Survivor character, Hand hand, Item find) {
+        if (Hand.LEFT.equals(hand)) character.takeItemWithLeftHand(find);
+        else character.takeItemWithRightHand(find);
+    }
+
+    public Optional<Item> findItem(String itemType) {
+        return items.stream().filter(it -> it.getType().equals(itemType)).findFirst();
     }
 }

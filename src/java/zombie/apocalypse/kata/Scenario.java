@@ -20,13 +20,23 @@ public class Scenario {
     }
 
     public void makeAMove(String characterName, Direction direction) {
+        Coordinates coordinates = findCharacter(characterName);
+        moveTo(coordinates.x, coordinates.y, direction, characterName);
+    }
+
+    public void collectItem(String characterName, String itemType, Hand hand) {
+        Coordinates coordinates = findCharacter(characterName);
+        cells[coordinates.x][coordinates.y].collectItem(characterName,itemType, hand);
+    }
+
+    private Coordinates findCharacter(String characterName) {
         for (int x = 0; x <= cells.length; x++) {
             for (int y = 0; y <= cells.length; y++) {
                 if (cells[x][y].contains(characterName))
-                    moveTo(x, y, direction, characterName);
-
+                    return new Coordinates(x,y);
             }
         }
+        return null;
     }
 
     private void moveTo(int x, int y, Direction direction, String characterName) {
@@ -49,6 +59,4 @@ public class Scenario {
                 break;
         }
     }
-
-
 }
