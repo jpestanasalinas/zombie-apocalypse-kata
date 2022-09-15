@@ -32,7 +32,7 @@ public class Survivor implements Character {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override

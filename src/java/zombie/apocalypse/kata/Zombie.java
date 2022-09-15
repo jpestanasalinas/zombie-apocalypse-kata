@@ -10,7 +10,7 @@ public class Zombie implements Character {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
